@@ -20,31 +20,20 @@ import { SidebarOpen } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
-  title: {
-    template: "%s · AMPtitude",
-    default: "AMPtitude"
-  },
+  title: "AMPtitude",
   description:
     "Customer Service Representative (CSR) portal for AMP Memberships.",
   openGraph: {
-    title: {
-      template: "%s · AMPtitude",
-      default:
-        "Customer Service Representative (CSR) portal for AMP Memberships."
-    },
+    title: "AMPtitude",
     description:
       "Customer Service Representative (CSR) portal for AMP Memberships.",
-    url: "https://AMPtitude.com",
+    url: "https://amptitude.vercel.app",
     siteName: "AMPtitude",
     locale: "en_US",
     type: "website"
   },
   twitter: {
-    title: {
-      template: "%s · AMPtitude",
-      default:
-        "Customer Service Representative (CSR) portal for AMP Memberships."
-    },
+    title: "AMPtitude",
     description:
       "Customer Service Representative (CSR) portal for AMP Memberships.",
     card: "summary_large_image"
