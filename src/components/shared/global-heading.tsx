@@ -27,7 +27,7 @@ const GlobalHeading: React.FC = () => {
 
   return (
     heading.label && (
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 min-h-8">
         <span className="*:size-6">{heading.icon}</span>
 
         <h1 className="text-2xl font-medium">{heading.label}</h1>
