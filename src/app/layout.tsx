@@ -59,7 +59,7 @@ const RootLayout: React.FC<
           <Sidebar className="hidden md:flex max-w-3xs" />
 
           <div className="w-full h-full overflow-y-auto bg-zinc-50 *:max-w-7xl *:mx-auto">
-            <header className="w-full p-3 sm:p-6 flex items-center gap-4">
+            <header className="w-full min-h-8 p-3 sm:p-6 flex items-center gap-4">
               {/* Mobile Sidebar */}
               <Sheet>
                 <SheetTrigger asChild className="md:hidden flex">
