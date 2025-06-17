@@ -1,6 +1,5 @@
 import AddSubscriptionForm from "@/components/forms/add-subscription-form";
 import CarWashProviderCard from "@/components/shared/car-wash-provider-card";
-import StatusBadge from "@/components/shared/status-badge";
 import { getCustomerById, getVehiclesByCustomerId } from "@/lib/db/actions";
 import { formatDate } from "@/lib/utils";
 import { Calendar, Mail, Phone, User } from "lucide-react";

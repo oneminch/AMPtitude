@@ -7,7 +7,8 @@ import { join } from "path";
 const stmtCache = new Map();
 
 // Database path configuration
-const DATA_DIR = join(process.cwd(), ".data");
+const isProduction = process.env.NODE_ENV === 'production';
+const DATA_DIR = isProduction ? '/tmp' : join(process.cwd(), ".data");
 const DB_PATH = join(DATA_DIR, "amptitude.db");
 
 // Singleton instance
