@@ -73,7 +73,11 @@ const TransferSubscriptionModal: React.FC<TransferSubscriptionModalProps> = ({
       setIsSubmitting(true);
 
       // Transfer subscription
-      await transferSubscription(subscription.id, newVehicleId);
+      const res = await transferSubscription(subscription.id, newVehicleId);
+
+      if (res && res.error) {
+        return toast.error(res.error);
+      }
 
       toast.success("Subscription transferred successfully!");
 

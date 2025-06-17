@@ -83,12 +83,16 @@ const AddSubscriptionForm: React.FC<AddSubscriptionFormProps> = ({
       setIsSubmitting(true);
 
       // Add subscription to database
-      await addSubscription({
+      const res = await addSubscription({
         ...formState,
         customerId,
         pricePerMonth: UNIVERSAL_PLANS[formState.plan],
         startDate: new Date().toISOString()
       });
+
+      if (typeof res !== "string" && res.error) {
+        return toast.error(res.error);
+      }
 
       toast.success("Subscription added successfully!");
 

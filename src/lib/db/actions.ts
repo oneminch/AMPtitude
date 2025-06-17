@@ -196,12 +196,18 @@ export async function addSubscription(data: {
 
     revalidatePath("/customers");
     revalidatePath(`/customers/${data.customerId}`);
+
     return subscriptionId;
   } catch (error) {
+    const err = {
+      error: "An error occurred. Please try again."
+    };
+
     if (error instanceof Error && error.message.includes("UNIQUE")) {
-      throw new Error("This vehicle already has an active subscription");
+      err.error = "This vehicle already has an active subscription";
     }
-    throw error;
+
+    return err;
   }
 }
 
@@ -231,35 +237,39 @@ export async function transferSubscription(
   subscriptionId: string,
   newVehicleId: string
 ) {
-  // First check if the new vehicle already has a subscription
-  const checkStmt = await prepare(`
-    SELECT id FROM subscriptions WHERE vehicle_id = ?
-  `);
+  try {
+    // First check if the new vehicle already has a subscription
+    const checkStmt = await prepare(`
+      SELECT id FROM subscriptions WHERE vehicle_id = ?
+      `);
 
-  const existingSubscription = checkStmt.get(newVehicleId);
-  if (existingSubscription) {
-    throw new Error("The target vehicle already has an active subscription");
-  }
+    const existingSubscription = checkStmt.get(newVehicleId);
+    if (existingSubscription) {
+      throw new Error("The target vehicle already has an active subscription");
+    }
 
-  // Get the current subscription details
-  const getStmt = await prepare(`
-    SELECT customer_id FROM subscriptions WHERE id = ?
-  `);
+    // Get the current subscription details
+    const getStmt = await prepare(`
+        SELECT customer_id FROM subscriptions WHERE id = ?
+        `);
 
-  const subscription = getStmt.get(subscriptionId) as { customer_id: string };
+    const subscription = getStmt.get(subscriptionId) as { customer_id: string };
 
-  // Update the subscription with the new vehicle
-  const updateStmt = await prepare(`
-    UPDATE subscriptions 
-    SET vehicle_id = ?
-    WHERE id = ?
-  `);
+    // Update the subscription with the new vehicle
+    const updateStmt = await prepare(`
+          UPDATE subscriptions 
+          SET vehicle_id = ?
+          WHERE id = ?
+          `);
 
-  updateStmt.run(newVehicleId, subscriptionId);
+    updateStmt.run(newVehicleId, subscriptionId);
 
-  if (subscription) {
-    revalidatePath("/customers");
-    revalidatePath(`/customers/${subscription.customer_id}`);
+    if (subscription) {
+      revalidatePath("/customers");
+      revalidatePath(`/customers/${subscription.customer_id}`);
+    }
+  } catch (error: any) {
+    return { error: error.message };
   }
 }
 
