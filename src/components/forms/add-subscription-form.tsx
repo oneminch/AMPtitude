@@ -154,15 +154,23 @@ const AddSubscriptionForm: React.FC<AddSubscriptionFormProps> = ({
 
               <SelectContent>
                 <SelectGroup>
-                  {vehicles.map((vehicle) => (
-                    <SelectItem key={vehicle.id} value={vehicle.id}>
-                      {vehicle.make} {vehicle.model} ({vehicle.year})
+                  {vehicles.length > 0 ? (
+                    vehicles.map((vehicle) => (
+                      <SelectItem key={vehicle.id} value={vehicle.id}>
+                        {vehicle.make} {vehicle.model} ({vehicle.year})
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem
+                      value="None"
+                      disabled
+                      className="justify-center">
+                      No Vehicles on Account
                     </SelectItem>
-                  ))}
+                  )}
                 </SelectGroup>
               </SelectContent>
             </Select>
-
             <FormErrorMessage errorMessage={errors.vehicleId} />
           </div>
         </div>
